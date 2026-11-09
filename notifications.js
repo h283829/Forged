@@ -1,0 +1,3 @@
+/**
+ * notifications.js - toast notifications.
+ */

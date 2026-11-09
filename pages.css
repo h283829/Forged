@@ -1,0 +1,24 @@
+/* ==========================================================================
+   pages.css - page-level styles.
+   Conventions:
+   - Scope every rule to a page root class: .page--home, .page--cases, ...
+   - Pages compose components and tokens; they never redefine them.
+   - No raw colours, spacing or radii: use variables from variables.css.
+   - Reusable patterns belong in components.css, not here.
+   ========================================================================== */
+
+/* ---- Temporary placeholder page (Step 1.3) ---- */
+.page--placeholder { display: flex; flex-direction: column; gap: var(--section-gap); }
+
+.content-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 320px;
+  padding: var(--card-padding);
+  border: var(--border-width) dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}

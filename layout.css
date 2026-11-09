@@ -1,0 +1,211 @@
+/* ==========================================================================
+   layout.css - reset, base document styles, typography, scrollbar, focus,
+   reduced motion, and global layout conventions.
+   ========================================================================== */
+
+/* ---- Reset ---- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; height: 100%; }
+
+h1, h2, h3, h4, p, figure, ul, ol { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+img, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+/* ---- Base ---- */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+#app { min-height: 100%; }
+
+::selection {
+  background-color: var(--color-accent-soft);
+  color: var(--color-text-primary);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover { color: var(--color-accent-hover); }
+
+/* ---- Focus (keyboard only) ---- */
+:focus { outline: none; }
+:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* ---- Typography classes ---- */
+.text-page-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+.text-section-heading {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+}
+.text-card-heading {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+}
+.text-body {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-base);
+}
+.text-secondary {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-base);
+}
+.text-meta {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+.text-label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-label);
+  text-transform: uppercase;
+}
+.text-currency {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  font-variant-numeric: tabular-nums;
+}
+.text-currency-sm {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+.text-xp {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+.text-tabular { font-variant-numeric: tabular-nums; }
+.text-accent { color: var(--color-accent); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-error { color: var(--color-error); }
+.text-info { color: var(--color-info); }
+
+/* ---- Layout conventions (building blocks; no actual page layout yet) ---- */
+.page { padding: var(--page-padding); }
+.section + .section { margin-top: var(--section-gap); }
+.stack { display: flex; flex-direction: column; gap: var(--component-gap); }
+.stack--tight { gap: var(--text-gap); }
+.cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+
+@media (max-width: 720px) {
+  .page { padding: var(--page-padding-compact); }
+}
+
+/* ---- Scrollbar ---- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--color-background); }
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border: 2px solid var(--color-background);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background-color: var(--color-border-strong); }
+::-webkit-scrollbar-corner { background: var(--color-background); }
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+    scroll-behavior: auto;
+  }
+}
+
+/* ---- Application shell: fixed sidebar + scrolling main area ---- */
+.app-shell {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--color-background);
+}
+
+.app-body {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;            /* lets the main column shrink instead of overflowing */
+  height: 100%;
+}
+
+/* Top bar: fixed above the scrolling content, aligned to the page content width */
+.topbar {
+  position: relative;
+  z-index: var(--z-header);
+  flex: none;
+  height: var(--topbar-height);
+  background-color: var(--color-background);
+  border-bottom: var(--border-width) solid var(--color-border-subtle);
+  container: topbar / inline-size;
+}
+.topbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  height: 100%;
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+  padding-inline: var(--page-padding);
+}
+.topbar__hud {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.app-main {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.app-main:focus { outline: none; }
+
+/* Centre page content and cap its width on very wide screens */
+.page {
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+}
+
+/* Top bar responsiveness follows the width of the main area, not the window,
+   so it also adapts when the sidebar is expanded or collapsed. */
+@container topbar (max-width: 900px) {
+  .topbar__inner { gap: var(--space-4); padding-inline: var(--page-padding-compact); }
+  .topbar__hud { gap: var(--space-4); }
+}
